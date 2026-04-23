@@ -1,0 +1,61 @@
+<odoo>
+  <record id="view_client_project_form" model="ir.ui.view">
+    <field name="name">client.project.form</field>
+    <field name="model">client.project</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+          <button name="action_start" string="Start" type="object"
+            class="btn-primary"
+            attrs="{'invisible': [('state','!=','draft')]}"/>
+          <button name="action_hold" string="Put On Hold" type="object"
+            attrs="{'invisible': [('state','!=','active')]}"/>
+          <button name="action_open_close_wizard" string="Close Project"
+            type="object" class="btn-danger"
+            attrs="{'invisible': [('state','in',['draft','closed'])]}"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <div class="oe_title">
+            <span class="o_field_widget o_field_char">
+              <field name="reference" readonly="1"/>
+            </span>
+            <h1><field name="name" placeholder="Project Name..."/></h1>
+          </div>
+          <group>
+            <group>
+              <field name="client_id"/>
+              <field name="user_id"/>
+              <field name="date_start"/>
+              <field name="date_end"/>
+            </group>
+            <group>
+              <field name="budget"/>
+              <field name="actual_cost"/>
+              <field name="completion_pct" widget="progressbar"/>
+              <field name="is_over_budget"
+                attrs="{'invisible': [('is_over_budget','=',False)]}"/>
+            </group>
+          </group>
+          <group>
+            <field name="description"/>
+          </group>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+  <record id="action_client_projects" model="ir.actions.act_window">
+    <field name="name">Client Projects</field>
+    <field name="res_model">client.project</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem id="menu_client_projects_root" name="Projects" sequence="20"/>
+  <menuitem id="menu_client_projects" name="All Projects"
+    parent="menu_client_projects_root"
+    action="action_client_projects"/>
+</odoo>

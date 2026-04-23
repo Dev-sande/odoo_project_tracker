@@ -1,0 +1,1 @@
+The Project Tracker module is designed to streamline how you manage client facing projects within Odoo. It provides a dedicated framework to track project progress, monitor specific deliverables. Note it's still work in progress
